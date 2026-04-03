@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TapAsan - Məhsul Detalı</title>
+    <link rel="icon"
+        href="https://lh3.googleusercontent.com/a/ACg8ocKX5FmP0tiurAVrFdymeYueA5SRXU6BoS-Gl0Yo87khdX5RsmI=s360-c-no">
+    
+    <!-- Open Graph / WhatsApp / Facebook Link Previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="TapAsan - Al və Sat" />
+    <meta property="og:description" content="TapAsan tətbiqində elanlara baxın və asanlıqla alqı-satqı edin." />
+    <meta property="og:image" content="https://lh3.googleusercontent.com/a/ACg8ocKX5FmP0tiurAVrFdymeYueA5SRXU6BoS-Gl0Yo87khdX5RsmI=s360-c-no" />
+    <meta property="og:url" content="https://tapasan.shop/item.html" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TapAsan - Al və Sat">
+    <meta name="twitter:description" content="TapAsan tətbiqində elanlara baxın və asanlıqla alqı-satqı edin.">
+    <meta name="twitter:image" content="https://lh3.googleusercontent.com/a/ACg8ocKX5FmP0tiurAVrFdymeYueA5SRXU6BoS-Gl0Yo87khdX5RsmI=s360-c-no">
+    <style>
+        :root {
+            --primary-color: #5555ff;
+            /* Matches button gradient start */
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --text-secondary: #666;
+            --white: #ffffff;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 80px;
+            /* Space for fixed bottom bar */
+        }
+
+        /* Top App Banner */
+        .app-banner {
+            background: var(--white);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .app-banner-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-icon {
+            width: 40px;
+            height: 40px;
+            background: #eee;
+            border-radius: 8px;
+            /* Placeholder for app icon */
+            background-image: url('https://lh3.googleusercontent.com/a/ACg8ocKX5FmP0tiurAVrFdymeYueA5SRXU6BoS-Gl0Yo87khdX5RsmI=s360-c-no');
+            /* This is hypothetical, will use a generic icon or allow failure */
+            background-size: cover;
+        }
+
+        /* If no icon url, use a fallback colored block */
+        .app-icon:empty {
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+        }
+
+        .app-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .app-info p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .btn-open {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 600px;
+            /* Mobile focused */
+            margin: 0 auto;
+            background: var(--bg-color);
+        }
+
+        /* Image Slider */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            /* Aspect ratio approximately 4:3 or 1:1 depending on design */
+            background: #e0e0e0;
+            overflow: hidden;
+            border-radius: 16px;
+            margin-top: 16px;
+            /* Space from app banner */
+        }
+
+        .slider-wrapper {
+            display: flex;
+            height: 100%;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .slider-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            scroll-snap-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-counter {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Product Info */
+        .product-info {
+            padding: 16px;
+            background: var(--bg-color);
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .meta {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* Detail Sections */
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            /* Or slightly darker */
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .category-chip {
+            display: inline-flex;
+            align-items: center;
+            background: var(--white);
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            /* Subtle shadow */
+            gap: 8px;
+        }
+
+        .category-icon {
+            /* Placeholder for category icon if available */
+            width: 20px;
+            height: 20px;
+            /* background-color: #eee; */
+            /* border-radius: 50%; */
+        }
+
+        .description-box {
+            background: var(--white);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            line-height: 1.6;
+            color: #444;
+            white-space: pre-wrap;
+            /* Preserve line breaks */
+        }
+
+        .location-box {
+            background: var(--white);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Bottom Action Bar */
+        /* Bottom Action Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            /* Center the fixed element */
+            width: 100%;
+            max-width: 600px;
+            background: var(--white);
+            padding: 12px 16px;
+            border-top: 1px solid #eee;
+            /* safe area for iOS */
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .contact-btn {
+            width: 100%;
+            /* Match image/slider width */
+            background: linear-gradient(90deg, #6c8cff, #8a5eff);
+            /* Example gradient */
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            /* Center text since it's a div */
+            box-sizing: border-box;
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- App Banner -->
+    <div class="app-banner">
+        <div class="app-banner-content">
+            <div class="app-icon">
+                <img src="https://lh3.googleusercontent.com/a/ACg8ocKX5FmP0tiurAVrFdymeYueA5SRXU6BoS-Gl0Yo87khdX5RsmI=s360-c-no"
+                    alt="" style="width:100%; height:100%; border-radius:8px; display:none;" id="appIconImg">
+                <!-- Fallback icon logic in CSS/JS -->
+
+            </div>
+            <div class="app-info">
+                <h3>TapAsan - Al və Sat</h3>
+                <p>Tətbiqdə daha rahat</p>
+            </div>
+        </div>
+        <a href="https://play.google.com/store/apps/details?id=com.ecommerce.tapasan" class="btn-open">Yüklə</a>
+    </div>
+
+    <div class="container" id="mainContainer" style="display:none;">
+
+        <!-- Image Slider -->
+        <div class="slider-container">
+            <div class="slider-wrapper" id="imageSlider">
+                <!-- Images will be injected here -->
+            </div>
+            <div class="slide-counter" id="slideCounter">1/1</div>
+        </div>
+
+        <!-- Info -->
+        <div class="product-info">
+            <div class="price" id="itemPrice">-- AZN</div>
+            <div class="title" id="itemTitle">Loading...</div>
+            <div class="meta" id="itemMeta">Bakı, dünən, 15:15</div>
+
+            <div class="section">
+                <div class="section-label">Kateqoriya</div>
+                <div class="category-chip">
+                    <!-- icon placeholder -->
+                    <span id="itemCategory">Elektronika</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-label">Elan təsviri</div>
+                <div class="description-box" id="itemDescription">
+                    Loading description...
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-label">Şəhər</div>
+                <div class="location-box" id="itemCity">
+                    Bakı, Azərbaycan
+                </div>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <div class="contact-btn" id="contactBtn">Yüklə</div>
+        </div>
+
+        <!-- Removed Similar Products Section -->
+
+    </div>
+
+    <div id="loading" style="text-align:center; padding: 50px;">Yüklənir...</div>
+    <div id="error" style="text-align:center; padding: 50px; color: red; display:none;"></div>
+    <script>
+        const BASE_URL = 'https://tapasan.shop/api/';
+
+        // Helper: Format Date
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+            // Simple logic for "bugün", "dünən" or date
+            if (diffDays === 0) return `Bu gün, ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+            if (diffDays === 1) return `Dünən, ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+            return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`; // DD.MM.YYYY
+        }
+
+        // Get ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        // Assuming url is like ?107 or ?id=107
+        let itemId = urlParams.get('id');
+        if (!itemId) {
+            // Check if key itself is the id (like ?107)
+            const keys = Array.from(urlParams.keys());
+            if (keys.length > 0 && !isNaN(keys[0])) {
+                itemId = keys[0];
+            }
+        }
+
+        // Default to 214 logic removed for production
+
+        // Helper: Redirect to Store
+        function redirectToStore() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            const androidUrl = "https://play.google.com/store/apps/details?id=com.ecommerce.tapasan";
+            const iosUrl = "https://apps.apple.com/app/id6756875280";
+
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                window.location.href = iosUrl;
+            } else {
+                window.location.href = androidUrl;
+            }
+        }
+
+        // Bind App Banner Button
+        const bannerBtn = document.querySelector('.btn-open');
+        if (bannerBtn) {
+            bannerBtn.onclick = (e) => {
+                e.preventDefault();
+                redirectToStore();
+            };
+            bannerBtn.removeAttribute('href'); // Avoid default link behavior
+            bannerBtn.style.cursor = 'pointer';
+        }
+
+        async function fetchItemDetails() {
+            if (!itemId) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').textContent = "Məhsul ID tapılmadı.";
+                document.getElementById('error').style.display = 'block';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BASE_URL}Listing/${itemId}`);
+                const data = await response.json();
+
+                // Contact Button -> App Download (using helper)
+                const contactBtn = document.getElementById('contactBtn');
+                if (contactBtn) {
+                    contactBtn.innerText = "Əlaqə saxla";
+                    contactBtn.onclick = () => {
+                        redirectToStore();
+                    };
+                }
+
+                if (data.success && data.data) {
+                    renderItem(data.data);
+                    // fetchSimilarProducts(data.data.category.id); // This line was commented out or removed in the original context
+                } else {
+                    throw new Error('Data not successful');
+                }
+            } catch (err) {
+                console.error(err);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+
+        function renderItem(item) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('mainContainer').style.display = 'block';
+
+            // Meta
+            document.title = `${item.title} | TapAsan`;
+
+            // Images
+            const slider = document.getElementById('imageSlider');
+            const counter = document.getElementById('slideCounter');
+            slider.innerHTML = '';
+
+            if (item.images && item.images.length > 0) {
+                item.images.forEach(img => {
+                    const slide = document.createElement('div');
+                    slide.className = 'slide';
+                    const imageEl = document.createElement('img');
+
+                    // Logic to handle image URLs
+                    let src = img.originalUrl || img.mediumUrl || img.thumbnailUrl;
+                    if (src && !src.startsWith('http')) {
+                        // Prepend base url if relative
+                        src = 'https://tapasan.shop/' + src;
+                    }
+
+                    imageEl.src = src;
+                    imageEl.onerror = function () {
+                        this.style.display = 'none'; // Hide if fails
+                    };
+
+                    slide.appendChild(imageEl);
+                    slider.appendChild(slide);
+                });
+                counter.textContent = `1/${item.images.length}`;
+
+                // Update counter on scroll
+                slider.addEventListener('scroll', () => {
+                    const index = Math.round(slider.scrollLeft / slider.offsetWidth);
+                    counter.textContent = `${index + 1}/${item.images.length}`;
+                });
+            }
+
+            // Info
+            document.getElementById('itemPrice').textContent = `${item.price} AZN`;
+            document.getElementById('itemTitle').textContent = item.title;
+            // Add date formatting if created at exists
+            const dateStr = formatDate(item.createdAt);
+            document.getElementById('itemMeta').textContent = `${item.cityName}, ${dateStr}`;
+
+            // Category
+            if (item.category) {
+                document.getElementById('itemCategory').textContent = item.category.name;
+            }
+
+            // Description
+            document.getElementById('itemDescription').innerText = item.description;
+
+            // City
+            document.getElementById('itemCity').textContent = `${item.cityName || 'Bakı'}, Azərbaycan`;
+        }
+
+        // Initialize
+        fetchItemDetails();
+
+    </script>
+</body>
+
+</html>
